@@ -49,6 +49,8 @@ public class Maze extends JFrame implements ActionListener{
         else if (e.getActionCommand().equals("Generate")){
 
             controlView.stop.setEnabled(true);
+            controlView.showSolve.setEnabled(true);
+            controlView.solve.setEnabled(true);
 
             if (controlView.showGenerate.isSelected()){
                 mazeView.newGrid(controlView.returnRow(), controlView.returnCol());
@@ -64,7 +66,13 @@ public class Maze extends JFrame implements ActionListener{
             }
         }
         else if (e.getActionCommand().equals("Solve")){
-            System.exit(0);
+            if (controlView.showSolve.isSelected()){
+//                mazeView.showSolveMaze(mazeView.grid, controlView.returnSpeed());
+                System.exit(0);
+            }
+            else{
+                mazeView.solveMaze(mazeView.grid);
+            }
         }
     }
 

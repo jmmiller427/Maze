@@ -1,3 +1,9 @@
+/* Name: John Miller
+ * Date: 31 October 2017
+ * Class: CS 335 - 001
+ * Project: Maze
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,15 +14,13 @@ import java.util.Random;
 class MazeView extends JPanel{
 
     Cell grid[][];
-    private Cell cell, currentCell, finalCell, neighborCell, temp;
-    ArrayList<Cell> neighbors;
-    LinkedList<Cell> cellStack = new LinkedList<>();
-    int row, col;
+    private Cell cell, currentGenCell, currentSolveCell, finalSolveCell, neighborGenCell, temp;
+    private ArrayList<Cell> neighbors;
+    private LinkedList<Cell> cellStack = new LinkedList<>();
+    private int row, col;
     boolean visited[][];
     boolean genRunning;
-    int visit = 0;
-    int total;
-    Timer mazeGenTimer;
+    private Timer mazeGenTimer, mazeSolveTimer;
 
     // Create a maze view JPanel that is rows tall and cols wide
     MazeView(int rows, int cols){
@@ -48,12 +52,14 @@ class MazeView extends JPanel{
         }
     }
 
-    void doGenMaze(){
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /*                     START GENERATE MAZE                     */
+    private void doGenMaze(Cell[][] grid, boolean[][] visited){
 
-        cellStack.push(currentCell);
-        visited[currentCell.get_i()][currentCell.get_j()] = true;
+        cellStack.push(currentGenCell);
+        visited[currentGenCell.get_i()][currentGenCell.get_j()] = true;
 
-        getNeighbors(currentCell, visited);
+        getNeighbors(currentGenCell, visited);
 
         if (neighbors.isEmpty()) {
             while (!cellStack.isEmpty()) {
@@ -61,7 +67,7 @@ class MazeView extends JPanel{
                 temp.setBackground(Color.GRAY);
                 getNeighbors(temp, visited);
                 if (!neighbors.isEmpty()) {
-                    currentCell = temp;
+                    currentGenCell = temp;
                     break;
                 }
                 if (temp == null) {
@@ -71,35 +77,35 @@ class MazeView extends JPanel{
             }
         }
 
-        neighborCell = neighbors.get(new Random().nextInt(neighbors.size()));
-        currentCell.setBackground(Color.GRAY);
+        neighborGenCell = neighbors.get(new Random().nextInt(neighbors.size()));
+        currentGenCell.setBackground(Color.GRAY);
 
-        breakWall(currentCell, neighborCell);
-        currentCell.drawWalls();
-        neighborCell.drawWalls();
+        breakWall(currentGenCell, neighborGenCell);
+        currentGenCell.drawWalls();
+        neighborGenCell.drawWalls();
 
-        currentCell = neighborCell;
+        currentGenCell = neighborGenCell;
     }
 
     void generateMaze(Cell[][] grid, boolean[][] visited){
 
-        currentCell = grid[0][0];
+        currentGenCell = grid[0][0];
         genRunning = true;
 
         while(genRunning){
-            doGenMaze();
+            doGenMaze(grid, visited);
         }
     }
 
     void showGenerateMaze(Cell[][] grid, boolean[][] visited, int speed){
 
-        currentCell = grid[0][0];
+        currentGenCell = grid[0][0];
         genRunning = true;
 
         ActionListener sec = e -> {
 
             if(genRunning) {
-                doGenMaze();
+                doGenMaze(grid, visited);
             }
             else{
                 mazeGenTimer.stop();
@@ -110,7 +116,7 @@ class MazeView extends JPanel{
         mazeGenTimer.start();
     }
 
-    void breakWall(Cell currentCell, Cell neighborCell){
+    private void breakWall(Cell currentCell, Cell neighborCell){
 
         int n_i = neighborCell.get_i();
         int n_j = neighborCell.get_j();
@@ -140,7 +146,7 @@ class MazeView extends JPanel{
         }
     }
 
-    void getNeighbors(Cell currentCell, boolean[][] visited){
+    private void getNeighbors(Cell currentCell, boolean[][] visited){
 
         neighbors = new ArrayList<>();
 
@@ -160,9 +166,45 @@ class MazeView extends JPanel{
             neighbors.add(grid[i][j + 1]);
         }
     }
+    /*                      END GENERATE MAZE                      */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void setRows(int rows){ row = rows; }
-    void setCols(int cols){ col = cols; }
-    int getRow(){ return row; }
-    int getCol(){ return col; }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /*                      START SOLVE MAZE                       */
+    void setStartFinalCell(){
+        currentSolveCell = grid[0][0];
+        currentSolveCell.setBackground(Color.GREEN);
+        finalSolveCell = grid[getRow() - 1][getCol() - 1];
+        finalSolveCell.setBackground(Color.RED);
+    }
+
+    void solveMaze(Cell[][] grid){
+        setStartFinalCell();
+    }
+
+    void showSolveMaze(Cell[][] grid, int speed){
+        setStartFinalCell();
+
+        ActionListener sec = e -> {
+
+            if(finalSolveCell != currentSolveCell) {
+
+
+            }
+            else{
+                mazeSolveTimer.stop();
+            }
+        };
+
+        mazeSolveTimer = new Timer(speed, sec);
+        mazeSolveTimer.start();
+    }
+
+    /*                      END SOLVE MAZE                         */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    private void setRows(int rows){ row = rows; }
+    private void setCols(int cols){ col = cols; }
+    private int getRow(){ return row; }
+    private int getCol(){ return col; }
 }
