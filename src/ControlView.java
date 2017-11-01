@@ -23,6 +23,7 @@ class ControlView extends JPanel{
     private int cols = 30;
     private int speed = 25;
 
+    // Make Sliders, labels, buttons and check boxes
     private JSlider rowSlider, columnSlider, speedSlider;
     private JLabel rowsLabel, columnsLabel, speedLabel;
     JButton solve, generate;
