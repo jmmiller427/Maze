@@ -10,9 +10,9 @@ import java.awt.*;
 
 public class Maze extends JFrame implements ActionListener{
 
-    private ControlView controlView;
-    private ProgressView progressView;
-    private MazeView mazeView;
+    ControlView controlView;
+    ProgressView progressView;
+    MazeView mazeView;
 
 //    private int rows;
 //    private int cols;
@@ -22,7 +22,7 @@ public class Maze extends JFrame implements ActionListener{
         super("Maze");
 
         controlView = new ControlView(this);
-        progressView = new ProgressView(this);
+        progressView = new ProgressView();
 
         int rows = controlView.returnRow();
         int cols = controlView.returnCol();
@@ -45,20 +45,25 @@ public class Maze extends JFrame implements ActionListener{
 
         if (e.getActionCommand().equals("Stop")){
             mazeView.genRunning = false;
+            mazeView.currentSolveCell = mazeView.finalSolveCell;
         }
         else if (e.getActionCommand().equals("Generate")){
 
             controlView.stop.setEnabled(true);
             controlView.showSolve.setEnabled(true);
             controlView.solve.setEnabled(true);
+            controlView.showGenerate.setEnabled(false);
+            controlView.generate.setEnabled(false);
 
             if (controlView.showGenerate.isSelected()){
+
                 mazeView.newGrid(controlView.returnRow(), controlView.returnCol());
                 mazeView.revalidate();
                 mazeView.repaint();
                 mazeView.showGenerateMaze(mazeView.grid, mazeView.visited, controlView.returnSpeed());
             }
             else {
+
                 mazeView.newGrid(controlView.returnRow(), controlView.returnCol());
                 mazeView.revalidate();
                 mazeView.repaint();
@@ -66,12 +71,17 @@ public class Maze extends JFrame implements ActionListener{
             }
         }
         else if (e.getActionCommand().equals("Solve")){
+
+            controlView.solve.setEnabled(false);
+            controlView.showSolve.setEnabled(false);
+            controlView.generate.setEnabled(true);
+            controlView.showGenerate.setEnabled(true);
+
             if (controlView.showSolve.isSelected()){
-//                mazeView.showSolveMaze(mazeView.grid, controlView.returnSpeed());
-                System.exit(0);
+                mazeView.showSolveMaze(controlView.returnSpeed());
             }
             else{
-                mazeView.solveMaze(mazeView.grid);
+                mazeView.solveMaze();
             }
         }
     }

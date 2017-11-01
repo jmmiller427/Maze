@@ -1,16 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 class ProgressView extends JPanel{
-    ProgressView(ActionListener AL){
 
-        JLabel progressLabel = new JLabel("Progress: 0%");
-        JLabel timeLabel = new JLabel("Time: 0s");
+    JLabel progressLabel, currentLabel;
+
+    ProgressView(){
+
+        progressLabel = new JLabel("Progress: 0%");
+        currentLabel = new JLabel("Currently: Doing Nothing");
 
         super.add(progressLabel);
-        super.add(timeLabel);
+        super.add(currentLabel);
 
         super.setLayout(new GridLayout(1, 2, 0,0));
     }
+
+    void generateMessageFinish(){ currentLabel.setText("Currently: Generating Maze Finished"); super.repaint(); }
+    void generateMessageCurrent(){ currentLabel.setText("Currently: Generating Maze..."); super.repaint(); }
+    void progress(int progress){ progressLabel.setText("Progress: " + progress + "%"); super.repaint(); }
 }
