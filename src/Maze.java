@@ -98,7 +98,7 @@ public class Maze extends JFrame implements ActionListener{
         // If the solve button is clicked
         else if (e.getActionCommand().equals("Solve")){
 
-            // Set solve buttons to disabled
+            // Set solve buttons to disable
             controlView.solve.setEnabled(false);
             controlView.showSolve.setEnabled(false);
 

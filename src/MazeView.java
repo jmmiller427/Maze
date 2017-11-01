@@ -22,13 +22,13 @@ class MazeView extends JPanel{
     Cell grid[][];
     Cell currentSolveCell, finalSolveCell;
     boolean visited[][];
+    boolean genRunning;
     private Cell currentGenCell, neighborGenCell;
     private ArrayList<Cell> neighbors, solveNeighbors;
     private LinkedList<Cell> cellStack = new LinkedList<>();
     private LinkedList<Cell> solveCellStack = new LinkedList<>();
     private int row, col;
     private boolean visitedSolve[][];
-    boolean genRunning;
     private Timer mazeGenTimer, mazeSolveTimer;
     private int total, visitedCells;
 

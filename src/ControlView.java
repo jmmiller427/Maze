@@ -19,8 +19,8 @@ import java.awt.event.ActionListener;
 class ControlView extends JPanel{
 
     // Set initial rows, cols, and speed
-    private int rows = 10;
-    private int cols = 10;
+    private int rows = 30;
+    private int cols = 30;
     private int speed = 25;
 
     private JSlider rowSlider, columnSlider, speedSlider;
@@ -37,11 +37,11 @@ class ControlView extends JPanel{
         showSolve = new JCheckBox("Show Solve");
         showGenerate = new JCheckBox("Show Generation");
         speedSlider = new JSlider(SwingConstants.HORIZONTAL, 10, 150, 70);
-        rowSlider = new JSlider(SwingConstants.HORIZONTAL, 10, 50, 10);
-        columnSlider = new JSlider(SwingConstants.HORIZONTAL, 10, 50, 10);
+        rowSlider = new JSlider(SwingConstants.HORIZONTAL, 10, 50, 30);
+        columnSlider = new JSlider(SwingConstants.HORIZONTAL, 10, 50, 30);
         speedLabel = new JLabel("  Speed: Medium");
-        rowsLabel = new JLabel("  Rows: 10");
-        columnsLabel = new JLabel("  Columns: 10");
+        rowsLabel = new JLabel("  Rows: 30");
+        columnsLabel = new JLabel("  Columns: 30");
 
         // Add action listeners to the buttons
         stop.addActionListener(AL);
