@@ -1,5 +1,12 @@
-import javax.swing.*;
-import java.awt.*;
+/* Name: John Miller
+ * Date: 1 November 2017
+ * Class: CS 335 - 001
+ * Project: Maze
+ */
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.GridLayout;
 
 class ProgressView extends JPanel{
 
@@ -7,16 +14,15 @@ class ProgressView extends JPanel{
 
     ProgressView(){
 
+        // Make a progress and current label
         progressLabel = new JLabel("Progress: 0%");
         currentLabel = new JLabel("Currently: Doing Nothing");
 
+        // Add them to the JPanel
         super.add(progressLabel);
         super.add(currentLabel);
 
+        // Set the layout of the panel
         super.setLayout(new GridLayout(1, 2, 0,0));
     }
-
-    void generateMessageFinish(){ currentLabel.setText("Currently: Generating Maze Finished"); super.repaint(); }
-    void generateMessageCurrent(){ currentLabel.setText("Currently: Generating Maze..."); super.repaint(); }
-    void progress(int progress){ progressLabel.setText("Progress: " + progress + "%"); super.repaint(); }
 }
